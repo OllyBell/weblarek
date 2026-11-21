@@ -1,4 +1,4 @@
-import { IBuyer, TPayment } from '../../types/index';
+import { IBuyer, TPayment, TBuyerErrors } from '../../types/index';
 
 export class Buyer {
   private payment: TPayment | null = null;
@@ -31,8 +31,8 @@ export class Buyer {
     this.phone = '';
   }
 
-  validate(): Partial<Record<keyof IBuyer, string>> {
-    const errors: Partial<Record<keyof IBuyer, string>> = {};
+  validate(): TBuyerErrors {
+    const errors: TBuyerErrors = {};
 
     if (!this.payment) errors.payment = 'Не выбран вид оплаты';
     if (!this.address.trim()) errors.address = 'Необходимо указать адрес';

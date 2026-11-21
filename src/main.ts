@@ -11,21 +11,21 @@ import { API_URL } from './utils/constants';
 
 
 // 1) Каталог
-const catalog = new Catalog(); //Создание экземпляра
-catalog.setProducts(apiProducts.items);// Заполняем каталог тестовыми данными
+const catalog = new Catalog(); // Создание экземпляра
+catalog.setProducts(apiProducts.items); // Заполняем каталог тестовыми данными
 console.log('Массив товаров из каталога: ', catalog.getProducts());
 
-const allProducts = catalog.getProducts(); // получение всех товаров
+const allProducts = catalog.getProducts(); // Получение всех товаров
 console.log('Все товары из каталога получены (количество:', allProducts.length, ')');
 
 
 const firstProduct = allProducts[0];
-const foundProduct = catalog.getProductById(firstProduct.id); // поиск товара по ID
+const foundProduct = catalog.getProductById(firstProduct.id); // Поиск товара по ID
 console.log('Поиск по ID из каталога:', firstProduct.id, '→', foundProduct);
 
 
 catalog.setSelectedProduct(firstProduct);
-const selected = catalog.getSelectedProduct(); // выбранный товар
+const selected = catalog.getSelectedProduct(); // Выбранный товар
 console.log('Товар для просмотра после выбора из каталога:', selected);
 
 
@@ -63,7 +63,7 @@ cart.clear(); // Очищаем корзину
 console.log('После очистки в корзине пусто:', cart.getItems()); 
 
 // 3) Покупатель
-const buyer = new Buyer(); //Создание экземпляра
+const buyer = new Buyer(); // Создание экземпляра
 
 // Ошибка если форма не заполнена
 console.log('Покупателю нужно заполнить пустую форму', buyer.validate());
@@ -86,7 +86,9 @@ console.log('После очистки данные покупателя', buyer
 
 
 // 4) Получение товаров каталога с сервера
-const apiService = new ApiService(new Api(API_URL));
+const api = new Api(API_URL);
+const apiService = new ApiService(api);
+
 
 apiService
     .getProducts()

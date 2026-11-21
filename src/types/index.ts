@@ -1,12 +1,16 @@
-export type ApiPostMethods = 'POST' | 'PUT' | 'DELETE';
+export type ApiPostMethods = "POST" | "PUT" | "DELETE";
 
 export interface IApi {
-    get<T extends object>(uri: string): Promise<T>;
-    post<T extends object>(uri: string, data: object, method?: ApiPostMethods): Promise<T>;
+  get<T extends object>(uri: string): Promise<T>;
+  post<T extends object>(
+    uri: string,
+    data: object,
+    method?: ApiPostMethods,
+  ): Promise<T>;
 }
 
 // Способ оплаты
-export type TPayment = 'card' | 'cash' | '';
+export type TPayment = "card" | "cash";
 
 // Товар
 export interface IProduct {
@@ -26,24 +30,25 @@ export interface IBuyer {
   address: string;
 }
 
+// Ошибки валидации: ключ — имя поля IBuyer, значение — текст ошибки.
+// Ключей может не быть, если поле валидно, поэтому все поля необязательные.
+export type TBuyerErrors = Partial<Record<keyof IBuyer, string>>;
+
 // Ответ сервера на GET /product/
 export interface IProductsResponse {
-    total: number;
-    items: IProduct[];
+  total: number;
+  items: IProduct[];
 }
 
 // Данные, которые мы отправляем на POST /order/
-export interface IOrder {
-    payment: TPayment;      // без null поэтому не пишем extends IBuyer
-    address: string;
-    email: string;
-    phone: string;
-    total: number;
-    items: string[]; // массив id товаров из корзины
+export interface IOrder extends IBuyer {
+  payment: TPayment;
+  total: number;
+  items: string[]; // массив id товаров из корзины
 }
 
 // Ответ сервера на POST /order/ — подтверждение покупки
 export interface IOrderResult {
-    id: string;
-    total: number;
+  id: string;
+  total: number;
 }

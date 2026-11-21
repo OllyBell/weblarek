@@ -4,9 +4,9 @@ export class Catalog {
   private products: IProduct[] = [];
   private selectedProduct: IProduct | null = null;
 
-  constructor(initialProducts: IProduct[] = []) {
-    this.products = initialProducts;
-  }
+  // constructor(initialProducts: IProduct[] = []) {
+  //   this.products = initialProducts;
+  // }
 
   setProducts(products: IProduct[]): void {
     this.products = products;
