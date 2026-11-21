@@ -5,6 +5,10 @@ import { Cart } from './components/Models/Cart';
 import { Buyer } from './components/Models/Buyer';
 import { apiProducts } from './utils/data';
 
+import { ApiService } from './components/Api/ApiService';
+import { Api } from './components/base/Api';
+import { API_URL } from './utils/constants';
+
 
 // 1) Каталог
 const catalog = new Catalog(); //Создание экземпляра
@@ -12,7 +16,7 @@ catalog.setProducts(apiProducts.items);// Заполняем каталог те
 console.log('Массив товаров из каталога: ', catalog.getProducts());
 
 const allProducts = catalog.getProducts(); // получение всех товаров
-console.log('Все товары из католога получены (количество:', allProducts.length, ')');
+console.log('Все товары из каталога получены (количество:', allProducts.length, ')');
 
 
 const firstProduct = allProducts[0];
@@ -31,7 +35,7 @@ const newSelected = catalog.getSelectedProduct(); // Смена выбранно
 console.log('Выбран новый товар из каталога (ID:', newSelected?.id, '):', newSelected);
 
 // 2) Корзина
-const cart = new Cart() //Создание экземпляра
+const cart = new Cart(); //Создание экземпляра
 
 const product1 = apiProducts.items[0];
 const product2 = apiProducts.items[1];
@@ -59,7 +63,7 @@ cart.clear(); // Очищаем корзину
 console.log('После очистки в корзине пусто:', cart.getItems()); 
 
 // 3) Покупатель
-const buyer = new Buyer() //Создание экземпляра
+const buyer = new Buyer(); //Создание экземпляра
 
 // Ошибка если форма не заполнена
 console.log('Покупателю нужно заполнить пустую форму', buyer.validate());
@@ -79,3 +83,18 @@ console.log('Валидация после заполнения всех пол�
 
 buyer.clear();
 console.log('После очистки данные покупателя', buyer.getData());
+
+
+// 4) Получение товаров каталога с сервера
+const apiService = new ApiService(new Api(API_URL));
+
+apiService
+    .getProducts()
+    .then((data) => {
+      catalog.setProducts(data.items);
+      console.log('Каталог успешно получен с сервера');
+      console.log('Содержимое модели:', catalog.getProducts());
+    })
+    .catch((error) => {
+      console.error('Не удалось загрузить каталог с сервера', error);
+    });
