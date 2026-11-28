@@ -16,7 +16,19 @@ export const categoryMap = {
   'другое': 'card__category_other',
 };
 
-export const settings = {
 
+export const settings = {
+  currencyName: 'синапсов', // Текст интерфейса
+  noPriceText: 'Бесценно', // Текст интерфейса
+  addButtonText: 'Купить', // Текст интерфейса
+  removeLabel: 'Удалить из корзины', // Текст интерфейса
+  unavailableLabel: 'Недоступно', // Текст интерфейса
+  successMessage: 'Списано', // Текст интерфейса
+  errorSeparator: '; ', // Текст интерфейса
+  emptyCartText: 'Корзина пуста',
+
+  
+  modalActiveClassName: 'modal_active',
+  paymentActiveClassName: 'button_alt-active',
 };
 

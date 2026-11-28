@@ -1,25 +1,32 @@
-import { IProduct } from '../../types/index';
+import { IProduct } from '../../types';
+import { IEvents } from '../base/Events';
+import { AppEvents } from '../../utils/events';
 
-
+//Корзина: хранит товары, выбранные для покупки
 export class Cart {
   private items: IProduct[] = [];
+
+  constructor(protected events: IEvents) {}
 
   getItems(): IProduct[] {
     return this.items;
   }
 
-  addItem(product: IProduct): void {
-    if (!this.hasItem(product.id)) {
+  add(product: IProduct): void {
+    if (!this.has(product.id)) {
       this.items.push(product);
+      this.events.emit(AppEvents.cartChanged);
     }
   }
 
-  removeItem(id: string): void {
+  remove(id: string): void {
     this.items = this.items.filter((item) => item.id !== id);
+    this.events.emit(AppEvents.cartChanged);
   }
 
   clear(): void {
     this.items = [];
+    this.events.emit(AppEvents.cartChanged);
   }
 
   getTotal(): number {
@@ -30,8 +37,7 @@ export class Cart {
     return this.items.length;
   }
 
-  hasItem(id: string): boolean {
+  has(id: string): boolean {
     return this.items.some((item) => item.id === id);
   }
 }
-
